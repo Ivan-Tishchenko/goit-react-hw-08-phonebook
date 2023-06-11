@@ -21,7 +21,6 @@ export const ContactList = props => {
     } else {
       setContacts(Object.values(allContacts));
     }
-    console.log(Object.values(allContacts));
   }, [allContacts, filterWord]);
 
   function contactsFilter() {
