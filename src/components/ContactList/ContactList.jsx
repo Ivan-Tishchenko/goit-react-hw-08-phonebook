@@ -3,36 +3,32 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFilter, getContacts } from 'redux/selectors';
-import { createContacts } from 'redux/contacts/contactsSlice';
+import { deleteContact } from 'redux/contacts/contactsSlice';
 
 export const ContactList = props => {
-  const [contacts, setContacts] = useState([]);
   const isMount = useRef();
   const filterWord = useSelector(getFilter);
   const allContacts = useSelector(getContacts);
+  const [contacts, setContacts] = useState(Object.values(allContacts));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(createContacts(props.getFromLocalstorage()));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     if (!isMount) {
-      return;
+      console.log('qwe');
     }
     if (filterWord.length > 0) {
       setContacts(contactsFilter());
     } else {
-      setContacts(allContacts);
+      setContacts(Object.values(allContacts));
     }
+    console.log(Object.values(allContacts));
   }, [allContacts, filterWord]);
 
   function contactsFilter() {
     if (filterWord.length === 0) {
       return allContacts;
     }
-    return allContacts.filter(
+    return Object.values(allContacts).filter(
       obj =>
         obj.name.substring(0, filterWord.length).toLowerCase() ===
         filterWord.toLowerCase()
@@ -41,14 +37,15 @@ export const ContactList = props => {
 
   return (
     <ul>
-      {contacts.map(obj => (
-        <li key={obj.id}>
-          {obj.name}: {obj.number}{' '}
-          <button onClick={() => props.remuveFromLocalstorage(obj.id)}>
-            X
-          </button>
-        </li>
-      ))}
+      {contacts.map(
+        obj =>
+          obj.id && (
+            <li key={obj.id}>
+              {obj.name}: {obj.number}{' '}
+              <button onClick={() => dispatch(deleteContact(obj.id))}>X</button>
+            </li>
+          )
+      )}
     </ul>
   );
 };
@@ -57,6 +54,5 @@ ContactList.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   number: PropTypes.string,
-  getFromLocalstorage: PropTypes.func,
   remuveFromLocalstorage: PropTypes.func,
 };

@@ -30,7 +30,11 @@ export const ContactForm = props => {
 
   function handleSubmit(evt, name, number) {
     evt.preventDefault();
-    if (contacts.map(obj => obj.name).includes(name)) {
+    if (
+      Object.values(contacts)
+        .map(obj => obj.name)
+        .includes(name)
+    ) {
       alert(`${name} is alredy in ContactList`);
     } else {
       dispatch(
@@ -40,15 +44,6 @@ export const ContactForm = props => {
           number,
         })
       );
-
-      props.addToLocalstorage([
-        ...contacts,
-        {
-          name,
-          id: nanoid(),
-          number,
-        },
-      ]);
     }
     evt.currentTarget.reset();
   }
