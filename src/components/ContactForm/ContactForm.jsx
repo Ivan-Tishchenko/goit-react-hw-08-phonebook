@@ -2,12 +2,17 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
+import { getContacts } from 'redux/selectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContacts } from 'redux/contacts/contactsSlice';
 
 export const ContactForm = props => {
   const [userName, setUserName] = useState('');
   const [number, setNumber] = useState('');
   const nameImputId = nanoid();
   const telInputId = nanoid();
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const hendleInput = evt => {
     const { name, value } = evt.target;
@@ -23,10 +28,35 @@ export const ContactForm = props => {
     }
   };
 
+  function handleSubmit(evt, name, number) {
+    evt.preventDefault();
+    if (contacts.map(obj => obj.name).includes(name)) {
+      alert(`${name} is alredy in ContactList`);
+    } else {
+      dispatch(
+        addContacts({
+          name,
+          id: nanoid(),
+          number,
+        })
+      );
+
+      props.addToLocalstorage([
+        ...contacts,
+        {
+          name,
+          id: nanoid(),
+          number,
+        },
+      ]);
+    }
+    evt.currentTarget.reset();
+  }
+
   return (
     <form
       className={css.form}
-      onSubmit={evt => props.handleSubmit(evt, userName, number)}
+      onSubmit={evt => handleSubmit(evt, userName, number)}
     >
       <label htmlFor={nameImputId}>Name</label>
       <input

@@ -1,40 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Section } from './Section/Section';
 import { ContactForm } from './ContactForm/ContactForm';
-import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { useDispatch } from 'react-redux';
+import { createContacts } from 'redux/contacts/contactsSlice';
 
 export const App = props => {
-  const [contacts, setContacts] = useState(getFromLocalstorage());
-  const [filterWord, setFilterWord] = useState('');
-
-  function handleSubmit(evt, name, number) {
-    evt.preventDefault();
-    if (contacts.map(obj => obj.name).includes(name)) {
-      alert(`${name} is alredy in ContactList`);
-    } else {
-      setContacts([
-        ...contacts,
-        ...[
-          {
-            name,
-            id: nanoid(),
-            number,
-          },
-        ],
-      ]);
-    }
-    evt.currentTarget.reset();
-    addToLocalstorage([
-      ...contacts,
-      {
-        name,
-        id: nanoid(),
-        number,
-      },
-    ]);
-  }
+  const dispatch = useDispatch();
 
   function addToLocalstorage(array) {
     const data = JSON.stringify(array);
@@ -51,32 +24,17 @@ export const App = props => {
     const data = getFromLocalstorage();
     const arrayToReturnInLocalstorage = data.filter(obj => obj.id !== id);
     addToLocalstorage(arrayToReturnInLocalstorage);
-    setContacts(arrayToReturnInLocalstorage);
+    dispatch(createContacts(arrayToReturnInLocalstorage));
   }
 
-  function handleInput({ currentTarget: { name, value } }) {
-    setFilterWord(value.trim());
-  }
-
-  function contactsFilter() {
-    if (filterWord.length === 0) {
-      return contacts;
-    }
-    return contacts.filter(
-      obj =>
-        obj.name.substring(0, filterWord.length).toLowerCase() ===
-        filterWord.toLowerCase()
-    );
-  }
   return (
     <>
       <Section title="Phonebook">
-        <ContactForm handleSubmit={handleSubmit} />
+        <ContactForm addToLocalstorage={addToLocalstorage} />
       </Section>
       <Section title="ContactList">
-        <Filter handleInput={handleInput} />
+        <Filter />
         <ContactList
-          contacts={contactsFilter()}
           getFromLocalstorage={getFromLocalstorage}
           remuveFromLocalstorage={remuveFromLocalstorage}
         />

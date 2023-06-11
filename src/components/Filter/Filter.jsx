@@ -1,11 +1,18 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { setFilter } from 'redux/filter/filterSlice';
 
 export const Filter = props => {
+  const dispatch = useDispatch();
+
+  const handleInput = ({ currentTarget: { value } }) => {
+    dispatch(setFilter(value.trim()));
+  };
   return (
     <>
       <label htmlFor="finder">Find contacts by name</label>
       <input
-        onInput={props.handleInput}
+        onInput={handleInput}
         type="text"
         name="filter"
         id="finder"
