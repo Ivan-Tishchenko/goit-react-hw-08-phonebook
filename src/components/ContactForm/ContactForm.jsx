@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
 import { getContacts } from 'redux/selectors';
-import { useSelector, useDispatch } from 'react-redux';
-import { addContacts } from 'redux/contacts/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/operations';
 
 export const ContactForm = props => {
   const [userName, setUserName] = useState('');
@@ -28,22 +28,12 @@ export const ContactForm = props => {
     }
   };
 
-  function handleSubmit(evt, name, number) {
+  function handleSubmit(evt, name, phone) {
     evt.preventDefault();
-    if (
-      Object.values(contacts)
-        .map(obj => obj.name)
-        .includes(name)
-    ) {
+    if (contacts.map(obj => obj.name).includes(name)) {
       alert(`${name} is alredy in ContactList`);
     } else {
-      dispatch(
-        addContacts({
-          name,
-          id: nanoid(),
-          number,
-        })
-      );
+      dispatch(addContact({ name, phone }));
     }
     evt.currentTarget.reset();
   }

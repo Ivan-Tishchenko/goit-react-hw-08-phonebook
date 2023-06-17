@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts, deleteContact } from 'redux/operations';
 import { getFilter, getContacts } from 'redux/selectors';
-import { deleteContact } from 'redux/contacts/contactsSlice';
 
 export const ContactList = props => {
   const isMount = useRef();
@@ -13,13 +13,17 @@ export const ContactList = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(fetchContacts());
+  }, []);
+
+  useEffect(() => {
     if (!isMount) {
       console.log('qwe');
     }
     if (filterWord.length > 0) {
       setContacts(contactsFilter());
     } else {
-      setContacts(Object.values(allContacts));
+      setContacts(allContacts);
     }
   }, [allContacts, filterWord]);
 
@@ -27,7 +31,7 @@ export const ContactList = props => {
     if (filterWord.length === 0) {
       return allContacts;
     }
-    return Object.values(allContacts).filter(
+    return allContacts.filter(
       obj =>
         obj.name.substring(0, filterWord.length).toLowerCase() ===
         filterWord.toLowerCase()
@@ -40,7 +44,7 @@ export const ContactList = props => {
         obj =>
           obj.id && (
             <li key={obj.id}>
-              {obj.name}: {obj.number}{' '}
+              {obj.name}: {obj.phone}{' '}
               <button onClick={() => dispatch(deleteContact(obj.id))}>X</button>
             </li>
           )
