@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { addContact, deleteContact, fetchContacts } from 'redux/operations';
 
 const contactsInitialState = {
-  contacts: [],
+  items: [],
   isLoading: false,
   error: null,
 };
@@ -21,43 +21,46 @@ const handleRejected = (state, action) => {
   state.error = action.payload;
 };
 
+const STATUS = {
+  FULFILLED: 'fulfilled',
+  PENDING: 'pending',
+  REJECTED: 'rejected',
+};
+
+const actionGenerators = [fetchContacts, addContact, deleteContact];
+
+const getActionGeneratorsWithType = status =>
+  actionGenerators.map(generator => generator[status]);
+
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: contactsInitialState,
-  extraReducers: {
-    [fetchContacts.pending](state) {
-      handlePending(state);
-    },
-    [fetchContacts.fulfilled](state, action) {
-      handleFulfilled(state, action);
-      state.contacts = action.payload;
-    },
-    [fetchContacts.rejected](state, action) {
-      handleRejected(state, action);
-    },
-    [deleteContact.pending](state) {
-      handlePending(state);
-    },
-    [deleteContact.fulfilled](state, action) {
-      handleFulfilled(state, action);
-      state.contacts = state.contacts.filter(
-        obj => obj.id !== action.payload.id
+  extraReducers: builder => {
+    builder
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.items = state.items.filter(obj => obj.id !== action.payload.id);
+      })
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        state.items = action.payload;
+      })
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.items.push(action.payload);
+      })
+      .addMatcher(
+        isAnyOf(...getActionGeneratorsWithType(STATUS.PENDING)),
+        handlePending
+      )
+      .addMatcher(
+        isAnyOf(...getActionGeneratorsWithType(STATUS.FULFILLED)),
+        handleFulfilled
+      )
+      .addMatcher(
+        isAnyOf(...getActionGeneratorsWithType(STATUS.REJECTED)),
+        handleRejected
       );
-    },
-    [deleteContact.rejected](state, action) {
-      handleRejected(state, action);
-    },
-    [addContact.pending](state) {
-      handlePending(state);
-    },
-    [addContact.fulfilled](state, action) {
-      handleFulfilled(state, action);
-      state.contacts.push(action.payload);
-    },
-    [addContact.rejected](state, action) {
-      handleRejected(state, action);
-    },
   },
 });
 
 export const contactsReducer = contactsSlice.reducer;
+
+//rafce
