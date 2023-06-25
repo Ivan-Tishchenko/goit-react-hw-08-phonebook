@@ -22,7 +22,7 @@ const Register = () => {
     dispatch(register({ name, email, password }));
 
     evt.currentTarget.reset();
-    navigate('/contacts', { replace: true });
+    navigate('/goit-react-hw-08-phonebook/contacts', { replace: true });
   };
 
   const hendleInput = evt => {
@@ -78,7 +78,9 @@ const Register = () => {
           Register
         </button>
       </form>
-      <NavLink to="/login">have accaunt? log in</NavLink>
+      <NavLink to="/goit-react-hw-08-phonebook/login">
+        have accaunt? log in
+      </NavLink>
     </>
   );
 };

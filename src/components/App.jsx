@@ -32,7 +32,7 @@ const App = props => {
         <Routes>
           <Route path="/goit-react-hw-08-phonebook" element={<IsLoading />} />
           <Route
-            path="/register"
+            path="/goit-react-hw-08-phonebook/register"
             element={
               <Section title="Register">
                 <Register />
@@ -40,7 +40,7 @@ const App = props => {
             }
           />
           <Route
-            path="/login"
+            path="/goit-react-hw-08-phonebook/login"
             element={
               <Section title="Log in">
                 <Login />
@@ -48,7 +48,7 @@ const App = props => {
             }
           />
           <Route
-            path="/contacts"
+            path="/goit-react-hw-08-phonebook/contacts"
             element={
               <>
                 <Section title="Phonebook">

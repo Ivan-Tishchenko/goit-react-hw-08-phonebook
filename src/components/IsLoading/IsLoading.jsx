@@ -12,7 +12,7 @@ const IsLoading = () => {
     if (token) {
       return;
     }
-    navigate('/register', { replace: true });
+    navigate('/goit-react-hw-08-phonebook/register', { replace: true });
   });
 
   return <div>Loading...</div>;

@@ -20,7 +20,7 @@ const Login = () => {
     dispatch(login({ email, password }));
 
     evt.currentTarget.reset();
-    navigate('/contacts', { replace: true });
+    navigate('/goit-react-hw-08-phonebook/contacts', { replace: true });
   };
 
   const hendleInput = evt => {
@@ -63,7 +63,9 @@ const Login = () => {
           Login
         </button>
       </form>
-      <NavLink to="/register">havent accaunt? sign up</NavLink>
+      <NavLink to="/goit-react-hw-08-phonebook/register">
+        havent accaunt? sign up
+      </NavLink>
     </>
   );
 };

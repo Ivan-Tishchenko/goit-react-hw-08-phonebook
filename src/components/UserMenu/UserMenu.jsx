@@ -19,7 +19,7 @@ const UserMenu = () => {
           className={css.button}
           onClick={() => {
             dispatch(logout());
-            navigate('/register', { replace: true });
+            navigate('/goit-react-hw-08-phonebook/register', { replace: true });
           }}
         >
           Logout
