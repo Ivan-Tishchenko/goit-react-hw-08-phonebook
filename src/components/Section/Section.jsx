@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import css from './Section.module.css';
 
-export const Section = props => {
+const Section = props => {
   return (
     <section className={css.section}>
       <h2>{props.title}</h2>
@@ -13,3 +13,5 @@ export const Section = props => {
 Section.propTypes = {
   title: PropTypes.string,
 };
+
+export default Section;

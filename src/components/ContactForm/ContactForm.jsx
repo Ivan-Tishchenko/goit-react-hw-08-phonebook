@@ -2,16 +2,16 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/operations';
 
-export const ContactForm = props => {
+const ContactForm = props => {
   const [userName, setUserName] = useState('');
   const [number, setNumber] = useState('');
   const nameImputId = nanoid();
   const telInputId = nanoid();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const hendleInput = evt => {
@@ -28,12 +28,12 @@ export const ContactForm = props => {
     }
   };
 
-  function handleSubmit(evt, name, phone) {
+  function handleSubmit(evt, name, number) {
     evt.preventDefault();
     if (contacts.map(obj => obj.name).includes(name)) {
       alert(`${name} is alredy in ContactList`);
     } else {
-      dispatch(addContact({ name, phone }));
+      dispatch(addContact({ name, number }));
     }
     evt.currentTarget.reset();
   }
@@ -73,3 +73,5 @@ export const ContactForm = props => {
 ContactForm.propTypes = {
   handleSubmit: PropTypes.func,
 };
+
+export default ContactForm;

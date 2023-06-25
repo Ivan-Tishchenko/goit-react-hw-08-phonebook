@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts, deleteContact } from 'redux/operations';
-import { getFilter, getContacts } from 'redux/selectors';
+import { selectFilter, selectContacts } from 'redux/selectors';
 import css from './ContactList.module.css';
 
-export const ContactList = props => {
-  const filterWord = useSelector(getFilter);
-  const allContacts = useSelector(getContacts);
+const ContactList = props => {
+  const filterWord = useSelector(selectFilter);
+  const allContacts = useSelector(selectContacts);
   const [contacts, setContacts] = useState(Object.values(allContacts));
   const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ export const ContactList = props => {
         obj =>
           obj.id && (
             <li key={obj.id} className={css.contact}>
-              {obj.name}: {obj.phone}{' '}
+              {obj.name}: {obj.number}{' '}
               <button
                 onClick={() => dispatch(deleteContact(obj.id))}
                 className={css.delete}
@@ -61,3 +61,5 @@ ContactList.propTypes = {
   number: PropTypes.string,
   remuveFromLocalstorage: PropTypes.func,
 };
+
+export default ContactList;

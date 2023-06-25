@@ -3,20 +3,31 @@
 }
 
 .delete {
-  display: none;
+  /* display: none; */
+  opacity: 0;
 }
 
 .contact:hover .delete,
 .contact:focus .delete {
-  display: inline;
-  position: fixed;
+  /* display: inline; */
+  opacity: 1;
   border: 1px solid black;
   border-radius: 5px;
   margin-left: 5px;
-  /* background-color: white; */
+  background-color: gray;
 }
 
-.delete:hover {
+.contact:hover .delete:hover {
   background-color: blue;
   color: white;
+}
+
+.contact {
+  padding: 10px;
+  padding-left: 30px;
+}
+
+.contact:hover {
+  background-color: gray;
+  border-radius: 10px;
 }

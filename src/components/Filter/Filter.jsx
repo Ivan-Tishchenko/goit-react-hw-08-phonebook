@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { setFilter } from 'redux/filter/filterSlice';
 
-export const Filter = props => {
+const Filter = props => {
   const dispatch = useDispatch();
 
   const handleInput = ({ currentTarget: { value } }) => {
@@ -27,3 +27,5 @@ export const Filter = props => {
 Filter.propTypes = {
   handleInput: PropTypes.func,
 };
+
+export default Filter;
