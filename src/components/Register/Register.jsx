@@ -41,44 +41,45 @@ const Register = () => {
         console.log('undefenit imput was used');
     }
   };
-  return (<>
-    <form className={css.form} onSubmit={evt => handleSubmit(evt)}>
-      <label htmlFor={nameImputId}>Name</label>
-      <input
-        onInput={hendleInput}
-        type="text"
-        name="name"
-        id={nameImputId}
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
-      />
-      <label htmlFor={emailInputId}>Email</label>
-      <input
-        onInput={hendleInput}
-        id={emailInputId}
-        type="email"
-        name="email"
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-        title="Email must contain @"
-        required
-      />
-      <label htmlFor={passwordId}>Password</label>
-      <input
-        onInput={hendleInput}
-        id={passwordId}
-        type="password"
-        name="password"
-        pattern=".{8,}"
-        required
-        title="Password must contain 8 or more characters"
-      />
-      <button className={css.button} type="submit">
-        Register
-      </button>
-    </form>
-  <NavLink to="/login">have accaunt? log in</NavLink>
-  </>
+  return (
+    <>
+      <form className={css.form} onSubmit={evt => handleSubmit(evt)}>
+        <label htmlFor={nameImputId}>Name</label>
+        <input
+          onInput={hendleInput}
+          type="text"
+          name="name"
+          id={nameImputId}
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+        <label htmlFor={emailInputId}>Email</label>
+        <input
+          onInput={hendleInput}
+          id={emailInputId}
+          type="email"
+          name="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          title="Email must contain @"
+          required
+        />
+        <label htmlFor={passwordId}>Password</label>
+        <input
+          onInput={hendleInput}
+          id={passwordId}
+          type="password"
+          name="password"
+          pattern=".{8,}"
+          required
+          title="Password must contain 8 or more characters"
+        />
+        <button className={css.button} type="submit">
+          Register
+        </button>
+      </form>
+      <NavLink to="/login">have accaunt? log in</NavLink>
+    </>
   );
 };
 

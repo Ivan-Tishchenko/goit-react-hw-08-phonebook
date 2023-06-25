@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { logout } from 'redux/operations';
 import { selectEmail, selectIsLogin } from 'redux/selectors';
+import css from './UserMenu.module.css';
 
 const UserMenu = () => {
   const isLogin = useSelector(selectIsLogin);
@@ -10,23 +11,21 @@ const UserMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  return isLogin ? (
-    <div>
-      <p>{userEmail}</p>
-      <button
-        onClick={() => {
-          dispatch(logout());
-          navigate('/register', { replace: true });
-        }}
-      >
-        Logout
-      </button>
-    </div>
-  ) : (
-    <>
-      <NavLink to="/register">Sign up</NavLink>
-      <NavLink to="/login">Log in</NavLink>
-    </>
+  return (
+    isLogin && (
+      <div className={css.div}>
+        <p className={css.email}>{userEmail}</p>
+        <button
+          className={css.button}
+          onClick={() => {
+            dispatch(logout());
+            navigate('/register', { replace: true });
+          }}
+        >
+          Logout
+        </button>
+      </div>
+    )
   );
 };
 

@@ -7,8 +7,14 @@
 }
 
 .button {
-  border-radius: 5px;
+  border-radius: 15px;
   width: 70%;
   margin-left: 15%;
   margin-top: 10px;
+  background-color: blueviolet;
+  color: blanchedalmond;
+}
+
+.button:hover {
+  background-color: gray;
 }

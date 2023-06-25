@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { getUserInfo } from 'redux/operations.js';
 import { selectToken } from 'redux/selectors.js';
 import IsLoading from './IsLoading/IsLoading.jsx';
@@ -31,8 +31,22 @@ const App = props => {
         <UserMenu />
         <Routes>
           <Route path="/goit-react-hw-08-phonebook" element={<IsLoading />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/register"
+            element={
+              <Section title="Register">
+                <Register />
+              </Section>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Section title="Log in">
+                <Login />
+              </Section>
+            }
+          />
           <Route
             path="/contacts"
             element={
