@@ -9,7 +9,7 @@ import css from './ContactList.module.css';
 const ContactList = props => {
   const filterWord = useSelector(selectFilter);
   const allContacts = useSelector(selectContacts);
-  const [contacts, setContacts] = useState(Object.values(allContacts));
+  const [contacts, setContacts] = useState(allContacts);
   const dispatch = useDispatch();
 
   useEffect(() => {
